@@ -1,4 +1,4 @@
-name: Build and push Docker images with Depot
+name: Build Docker images with Depot
 description: Build and push Docker images with Depot
 author: Depot
 branding:
