@@ -17,7 +17,7 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
 
 ### Differences from `docker/build-push-action`
 
-1. `token` - you must pass a Depot access token via the `token` input:
+1. `token` - you must pass a Depot access token via the `token` input, or via the `DEPOT_TOKEN` environment variable:
 
    ```yaml
    steps:
