@@ -66,7 +66,7 @@ export async function build(inputs: Inputs) {
     ),
 
     // Build context
-    handlebars.compile(inputs.context)({defaultContext}),
+    handlebars.compile(inputs.context || defaultContext)({defaultContext}),
   ]
 
   const res = await exec.getExecOutput('depot', args, {
