@@ -91,7 +91,6 @@ inputs:
     required: false
   token:
     description: 'Depot Token used to authenticate with the remote builder instance'
-    default: ${{ env.DEPOT_TOKEN }}
     required: false
   ulimit:
     description: 'Ulimit options (e.g., nofile=1024:1024)'
