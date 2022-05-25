@@ -47,7 +47,7 @@ async function cleanup() {
   const tempDir = context.getTempDir()
   if (tempDir.length === 0) return
   core.startGroup(`Removing temp folder ${tempDir}`)
-  fs.rmdirSync(tempDir, {recursive: true})
+  fs.rmSync(tempDir, {recursive: true})
   core.endGroup()
 }
 
