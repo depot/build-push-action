@@ -41,7 +41,7 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
    ```diff
    steps:
      -
-   -  uses: depot/build-push-action@v1
+   -  uses: docker/build-push-action@v1
    +  uses: depot/build-push-action@v1
       with:
    -    cache-from: type=gha
