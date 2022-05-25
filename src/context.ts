@@ -38,6 +38,7 @@ export interface Inputs {
 }
 
 export function getInputs(): Inputs {
+  const defaultContext = getDefaultBuildContext()
   return {
     addHosts: parseCSV(core.getInput('add-hosts')),
     allow: parseCSV(core.getInput('allow')),
@@ -46,7 +47,7 @@ export function getInputs(): Inputs {
     cacheFrom: core.getMultilineInput('cache-from'),
     cacheTo: core.getMultilineInput('cache-to'),
     cgroupParent: core.getInput('cgroup-parent'),
-    context: core.getInput('context'),
+    context: core.getInput('context') || defaultContext,
     file: core.getInput('file'),
     githubToken: core.getInput('github-token'),
     labels: core.getMultilineInput('labels'),
