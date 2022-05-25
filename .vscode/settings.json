@@ -1,0 +1,6 @@
+{
+  "npm.packageManager": "pnpm",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "prettier.prettierPath": "node_modules/prettier/index.js"
+}
