@@ -1,10 +1,10 @@
 # Depot `build-push-action` GitHub Action
 
-This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), but uses the `depot` CLI to execute the build.
+This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), but uses the [`depot` CLI](https://github.com/depot/cli) to execute the build.
 
 ## Requirements
 
-The `depot` CLI will need to be available in your workflow, you can use the [`depot/setup-action`]((https://github.com/depot/setup-action) to install it:
+The `depot` CLI will need to be available in your workflow, you can use the [`depot/setup-action`](https://github.com/depot/setup-action) to install it:
 
 ```yaml
 steps:
