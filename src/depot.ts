@@ -1,11 +1,14 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
+import * as http from '@actions/http-client'
 import * as csv from 'csv-parse/sync'
 import * as fs from 'fs'
 import * as handlebars from 'handlebars'
 import * as path from 'path'
 import type {Inputs} from './context'
 import * as context from './context'
+
+const client = new http.HttpClient('depot-build-push-action')
 
 export async function isInstalled(): Promise<boolean> {
   try {
@@ -69,11 +72,24 @@ export async function build(inputs: Inputs) {
     handlebars.compile(inputs.context)({defaultContext}),
   ]
 
+  // Attempt to exchange GitHub Actions OIDC token for temporary Depot trust relationship token
+  let token = inputs.token ?? process.env.DEPOT_TOKEN
+  if (!token) {
+    try {
+      const odicToken = await core.getIDToken('https://depot.dev')
+      const res = await client.postJson<{ok: boolean; token: string}>(
+        'https://depot.dev/api/auth/oidc/github-actions',
+        {token: odicToken},
+      )
+      if (res.result && res.result.token) token = res.result.token
+    } catch {}
+  }
+
   const res = await exec.getExecOutput('depot', args, {
     ignoreReturnCode: true,
     env: {
       ...process.env,
-      ...(inputs.token ? {DEPOT_TOKEN: inputs.token} : {}),
+      ...(token ? {DEPOT_TOKEN: token} : {}),
     },
   })
   if (res.stderr.length > 0 && res.exitCode != 0) {
