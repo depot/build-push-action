@@ -81,8 +81,13 @@ export async function build(inputs: Inputs) {
         'https://depot.dev/api/auth/oidc/github-actions',
         {token: odicToken},
       )
-      if (res.result && res.result.token) token = res.result.token
-    } catch {}
+      if (res.result && res.result.token) {
+        token = res.result.token
+        core.info(`Exchanged GitHub Actions OIDC token for temporary Depot token`)
+      }
+    } catch {
+      core.info('Unable to exchange GitHub OIDC token for temporary Depot token')
+    }
   }
 
   const res = await exec.getExecOutput('depot', args, {
