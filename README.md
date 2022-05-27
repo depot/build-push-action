@@ -15,9 +15,11 @@ steps:
 
 This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), see [the README](https://github.com/docker/build-push-action#readme) there for more information.
 
-### Differences from `docker/build-push-action`
+### Authentication
 
-1. `token` - you must pass a Depot access token via the `token` input, or via the `DEPOT_TOKEN` environment variable:
+This action needs an Depot API token to communicate with your project's builders. You can supply this one of three ways:
+
+1. You can supply a user or project API token via the `token` input:
 
    ```yaml
    steps:
@@ -25,6 +27,32 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
        with:
          token: ${{ secrets.DEPOT_TOKEN }}
    ```
+
+2. You can supply a user or project API token via the `DEPOT_TOKEN` environment variable:
+
+   ```yaml
+   steps:
+     - uses: depot/build-push-action@v1
+       env:
+         DEPOT_TOKEN: ${{ secrets.DEPOT_TOKEN }}
+   ```
+
+3. Depot supports GitHub's [OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) tokens via a trust relationship, so your Actions builds can securely authenticate with your Depot projects without any static access tokens. To configure the trust relationship, visit your Depot project settings, then add your repository and desired workflow config to `Trust Relationships`. The in your workflow, enable the `id-token: write` permission:
+
+   ```yaml
+   permissions:
+     # allow issuing OIDC tokens for this workflow run
+     id-token: write
+     # allow at least reading the repo contents, add other permissions if necessary
+     contents: read
+   steps:
+     # no need to provide a DEPOT_TOKEN
+     - uses: depot/build-push-action@v1
+   ```
+
+### Differences from `docker/build-push-action`
+
+1. Authentication — this action needs to authenticate with a Depot API token to communicate with your project's builders (see above).
 
 2. If you have not configured a `depot.json` file with `depot init`, you can explicitly specify your project ID via the `project` input:
 
