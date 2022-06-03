@@ -17,7 +17,7 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
 
 ### Authentication
 
-This action needs an Depot API token to communicate with your project's builders. You can supply this one of three ways:
+This action needs a Depot API token to communicate with your project's builders. You can supply this one of three ways:
 
 1. You can supply a user or project API token via the `token` input:
 
@@ -37,7 +37,7 @@ This action needs an Depot API token to communicate with your project's builders
          DEPOT_TOKEN: ${{ secrets.DEPOT_TOKEN }}
    ```
 
-3. Depot supports GitHub's [OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) tokens via a trust relationship, so your Actions builds can securely authenticate with your Depot projects without any static access tokens. To configure the trust relationship, visit your Depot project settings, then add your repository and desired workflow config to `Trust Relationships`. The in your workflow, enable the `id-token: write` permission:
+3. Depot supports GitHub's [OpenID Connect](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) tokens via a trust relationship, so your Actions builds can securely authenticate with your Depot projects without any static access tokens. To configure the trust relationship, visit your Depot project settings, then add your repository and desired workflow config to `Trust Relationships`. Then in your workflow, enable the `id-token: write` permission:
 
    ```yaml
    permissions:
