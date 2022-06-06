@@ -85,8 +85,8 @@ export async function build(inputs: Inputs) {
         token = res.result.token
         core.info(`Exchanged GitHub Actions OIDC token for temporary Depot token`)
       }
-    } catch {
-      core.info('Unable to exchange GitHub OIDC token for temporary Depot token')
+    } catch (err) {
+      core.info(`Unable to exchange GitHub OIDC token for temporary Depot token: ${err}`)
     }
   }
 
