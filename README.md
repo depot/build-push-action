@@ -11,7 +11,7 @@ steps:
   - uses: depot/setup-action@v1
 ```
 
-## Usage
+## Setup
 
 This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), see [the README](https://github.com/docker/build-push-action#readme) there for more information.
 
@@ -130,6 +130,121 @@ The following inputs can be used as `step.with` keys and match the inputs from [
 | `imageid`  | String  | Image ID                                |
 | `digest`   | String  | Image digest                            |
 | `metadata` | JSON    | Build result metadata                   |
+
+## Examples
+
+Below are examples of how to use `depot/build-push-action` to build your Docker images using Depot builders. For all examples, it is assumed that you are either specifying the Depot project ID via the `project` or input, environment variable, or using a `depot.json` file.
+
+### Basic build and push with OIDC token exchange
+
+See our [trust relationship documentation](https://depot.dev/docs/cli/authentication#oidc-trust-relationships) for details on configuring this exchange.
+
+```yaml
+name: Build image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Set up Depot CLI
+        uses: depot/setup-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: depot/build-push-action@v1
+        with:
+          push: true
+          tags: user/app:latest
+```
+
+### Basic build and push with Depot API tokens
+
+You can use either Depot [project tokens](https://depot.dev/docs/cli/authentication#project-tokens) or [user tokens](https://depot.dev/docs/cli/authentication#user-access-tokens) in the `token` input.
+
+**Note:** Project tokens are the recommendation if OIDC tokens are not an option.
+
+```yaml
+name: Build image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Depot CLI
+        uses: depot/setup-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: depot/build-push-action@v1
+        with:
+          token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
+          push: true
+          tags: user/app:latest
+```
+
+### Build multi-platform images
+
+Depot supports building truly native multi-platform images, no emulation needed.
+
+```yaml
+name: Build image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Depot CLI
+        uses: depot/setup-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: depot/build-push-action@v1
+        with:
+          token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: user/app:latest
+```
+
+### Other examples
+
+- [Build and push image to Amazon ECR](/docs/build-and-push-ecr.md)
+- [Build and push image to GCP Artifact Registry](/docs/build-and-push-artifact-registry.md)
+- [Build and push to multiple registries](/docs/build-and-push-multiple.md)
+- [Export image to Docker](/docs/export-to-docker.md)
 
 
 ## License
