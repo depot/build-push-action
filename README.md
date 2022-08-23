@@ -2,7 +2,22 @@
 
 This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), but uses the [`depot` CLI](https://github.com/depot/cli) to execute the build.
 
-## Requirements
+### Table of Contents
+
+- [Setup](#setup)
+- [Usage](#usage)
+  - [Authentication](#authentication)
+  - [Differences from `docker/build-push-action`](#differences-from-docker-build-push-action)
+  - [Inputs](#inputs)
+  - [Outputs](#outputs)
+- [Examples](#examples)
+  - [Basic build and push with OIDC token exchange](#basic-build-and-push-with-oidc-token-exchange)
+  - [Basic build and push with Depot API tokens](#basic-build-and-push-with-depot-api-tokens)
+  - [Build multi-platform images](#build-multi-platform-images)
+  - [Other examples](#other-examples)
+- [License](#license)
+
+## Setup
 
 The `depot` CLI will need to be available in your workflow, you can use the [`depot/setup-action`](https://github.com/depot/setup-action) to install it:
 
@@ -11,9 +26,7 @@ steps:
   - uses: depot/setup-action@v1
 ```
 
-## Setup
-
-This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), see [the README](https://github.com/docker/build-push-action#readme) there for more information.
+## Usage
 
 ### Authentication
 
@@ -76,18 +89,18 @@ This action needs a Depot API token to communicate with your project's builders.
    -    cache-to: type=gha,mode=max
    ```
 
-## Inputs and outputs
+### Inputs
 
 This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action) with two additional inputs to work with Depot.
 
-### Depot specific inputs
+#### Depot-specific inputs
 
 | Name      | Type   | Description                                                                                                                       |
 | --------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | `project` | String | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders              |
 | `token`   | String | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication)) |
 
-### General inputs
+#### General inputs
 
 The following inputs can be used as `step.with` keys and match the inputs from [`docker/build-push-action`](https://github.com/docker/build-push-action)
 
@@ -95,7 +108,6 @@ The following inputs can be used as `step.with` keys and match the inputs from [
 | ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `add-hosts`        | List/CSV | List of [customs host-to-IP mapping](https://docs.docker.com/engine/reference/commandline/build/#add-entries-to-container-hosts-file---add-host) (e.g., `docker:10.180.0.1`)       |
 | `allow`            | List/CSV | List of [extra privileged entitlement](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#allow) (e.g., `network.host,security.insecure`)                 |
-| `builder`          | String   | Builder instance (see [setup-buildx](https://github.com/docker/setup-buildx-action) action)                                                                                        |
 | `build-args`       | List     | List of [build-time variables](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)                                                              |
 | `build-contexts`   | List     | List of additional [build contexts](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-context) (e.g., `name=path`)                                 |
 | `cache-from`       | List     | List of [external cache sources](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#cache-from) (e.g., `type=local,src=path/to/dir`)                      |
