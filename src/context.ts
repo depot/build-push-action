@@ -22,6 +22,7 @@ export interface Inputs {
   load: boolean
   network: string
   noCache: boolean
+  noCacheFilters: string[]
   outputs: string[]
   platforms: string[]
   project: string
@@ -54,6 +55,7 @@ export function getInputs(): Inputs {
     load: core.getBooleanInput('load'),
     network: core.getInput('network'),
     noCache: core.getBooleanInput('no-cache'),
+    noCacheFilters: core.getMultilineInput('no-cache-filters'),
     outputs: core.getMultilineInput('outputs'),
     platforms: parseCSV(core.getInput('platforms')),
     project: core.getInput('project'),

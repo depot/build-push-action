@@ -41,6 +41,7 @@ export async function build(inputs: Inputs) {
     ...flag('--metadata-file', getMetadataFile()),
     ...flag('--network', inputs.network),
     ...flag('--no-cache', inputs.noCache),
+    ...flag('--no-cache-filter', inputs.noCacheFilters),
     ...flag('--output', inputs.outputs),
     ...flag('--platform', inputs.platforms.join(',')),
     ...flag('--project', inputs.project),
