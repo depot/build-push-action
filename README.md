@@ -8,8 +8,10 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
 - [Usage](#usage)
   - [Authentication](#authentication)
   - [Differences from `docker/build-push-action`](#differences-from-docker-build-push-action)
-  - [Inputs](#inputs)
-  - [Outputs](#outputs)
+- [Inputs](#inputs)
+  - [Depot-specific inputs](#depot-specific-inputs)
+  - [General inputs](#general-inputs)
+- [Outputs](#outputs)
 - [Examples](#examples)
   - [Basic build and push with OIDC token exchange](#basic-build-and-push-with-oidc-token-exchange)
   - [Basic build and push with Depot API tokens](#basic-build-and-push-with-depot-api-tokens)
@@ -91,16 +93,16 @@ This action needs a Depot API token to communicate with your project's builders.
    -    cache-to: type=gha,mode=max
    ```
 
-### Inputs
+## Inputs
 
-#### Depot-specific inputs
+### Depot-specific inputs
 
 | Name      | Type   | Description                                                                                                                                                                    |
 | --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `project` | String | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders (default: the `depot.json` file at the root of your repo) |
 | `token`   | String | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication))                                              |
 
-#### General inputs
+### General inputs
 
 The following inputs can be used as `step.with` keys and match the inputs from [`docker/build-push-action`](https://github.com/docker/build-push-action):
 
@@ -133,7 +135,7 @@ The following inputs can be used as `step.with` keys and match the inputs from [
 | `ulimit`           | List     | [Ulimit](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#-set-ulimits---ulimit) options (e.g., `nofile=1024:1024`)                                     |
 | `github-token`     | String   | GitHub Token used to authenticate against a repository for [Git context](https://github.com/docker/build-push-action#git-context) (default `${{ github.token }}`)                  |
 
-### Outputs
+## Outputs
 
 | Name       | Type   | Description           |
 | ---------- | ------ | --------------------- |
