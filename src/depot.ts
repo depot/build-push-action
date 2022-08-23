@@ -25,6 +25,7 @@ export async function version() {
 
 export async function build(inputs: Inputs) {
   const defaultContext = context.getDefaultBuildContext()
+  const resolvedContext = handlebars.compile(inputs.context)({defaultContext})
   const args = [
     'build',
     ...flag('--add-host', inputs.addHosts),
@@ -41,6 +42,7 @@ export async function build(inputs: Inputs) {
     ...flag('--metadata-file', getMetadataFile()),
     ...flag('--network', inputs.network),
     ...flag('--no-cache', inputs.noCache),
+    ...flag('--no-cache-filter', inputs.noCacheFilters),
     ...flag('--output', inputs.outputs),
     ...flag('--platform', inputs.platforms.join(',')),
     ...flag('--project', inputs.project),
@@ -63,13 +65,13 @@ export async function build(inputs: Inputs) {
     ),
     ...flag(
       '--secret',
-      inputs.githubToken && !hasGitAuthTokenSecret(inputs.secrets) && inputs.context == defaultContext
+      inputs.githubToken && !hasGitAuthTokenSecret(inputs.secrets) && resolvedContext.startsWith(defaultContext)
         ? getSecret(`GIT_AUTH_TOKEN=${inputs.githubToken}`)
         : false,
     ),
 
     // Build context
-    handlebars.compile(inputs.context)({defaultContext}),
+    resolvedContext,
   ]
 
   // Attempt to exchange GitHub Actions OIDC token for temporary Depot trust relationship token
