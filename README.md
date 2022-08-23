@@ -28,9 +28,11 @@ steps:
 
 ## Usage
 
+This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action). You will need to supply your project ID and Depot authentication information, although both can be inferred from the environment. See below for more details.
+
 ### Authentication
 
-This action needs a Depot API token to communicate with your project's builders. You can supply this one of three ways:
+This action needs a Depot API token to communicate with your project's builders. You can supply this one of three ways. The third, using OICD, is the preferred method, but you can also supply a token directly.
 
 1. You can supply a user or project API token via the `token` input:
 
@@ -91,18 +93,16 @@ This action needs a Depot API token to communicate with your project's builders.
 
 ### Inputs
 
-This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action) with two additional inputs to work with Depot.
-
 #### Depot-specific inputs
 
-| Name      | Type   | Description                                                                                                                       |
-| --------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `project` | String | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders              |
-| `token`   | String | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication)) |
+| Name      | Type   | Description                                                                                                                                                                    |
+| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `project` | String | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders (default: the `depot.json` file at the root of your repo) |
+| `token`   | String | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication))                                              |
 
 #### General inputs
 
-The following inputs can be used as `step.with` keys and match the inputs from [`docker/build-push-action`](https://github.com/docker/build-push-action)
+The following inputs can be used as `step.with` keys and match the inputs from [`docker/build-push-action`](https://github.com/docker/build-push-action):
 
 | Name               | Type     | Description                                                                                                                                                                        |
 | ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
