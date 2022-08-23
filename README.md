@@ -82,19 +82,17 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
 
 ### Depot specific inputs
 
-| Name               | Type     | Description                                                                         |
-|--------------------|----------|-------------------------------------------------------------------------------------|
-| `project`          | String   | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders             |
-| `token`            | String   | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication)) |
-
+| Name      | Type   | Description                                                                                                                       |
+| --------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `project` | String | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders              |
+| `token`   | String | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication)) |
 
 ### General inputs
 
 The following inputs can be used as `step.with` keys and match the inputs from [`docker/build-push-action`](https://github.com/docker/build-push-action)
 
-
 | Name               | Type     | Description                                                                                                                                                                        |
-|--------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ------------------ | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `add-hosts`        | List/CSV | List of [customs host-to-IP mapping](https://docs.docker.com/engine/reference/commandline/build/#add-entries-to-container-hosts-file---add-host) (e.g., `docker:10.180.0.1`)       |
 | `allow`            | List/CSV | List of [extra privileged entitlement](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#allow) (e.g., `network.host,security.insecure`)                 |
 | `builder`          | String   | Builder instance (see [setup-buildx](https://github.com/docker/setup-buildx-action) action)                                                                                        |
@@ -125,11 +123,11 @@ The following inputs can be used as `step.with` keys and match the inputs from [
 
 ### Outputs
 
-| Name       | Type    | Description                             |
-|------------|---------|-----------------------------------------|
-| `imageid`  | String  | Image ID                                |
-| `digest`   | String  | Image digest                            |
-| `metadata` | JSON    | Build result metadata                   |
+| Name       | Type   | Description           |
+| ---------- | ------ | --------------------- |
+| `imageid`  | String | Image ID              |
+| `digest`   | String | Image digest          |
+| `metadata` | JSON   | Build result metadata |
 
 ## Examples
 
@@ -245,7 +243,6 @@ jobs:
 - [Build and push image to GCP Artifact Registry](/docs/build-and-push-artifact-registry.md)
 - [Build and push to multiple registries](/docs/build-and-push-multiple.md)
 - [Export image to Docker](/docs/export-to-docker.md)
-
 
 ## License
 
