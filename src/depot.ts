@@ -33,8 +33,7 @@ async function execBuild(cmd: string, args: string[], options: exec.ExecOptions)
 export async function build(inputs: Inputs) {
   const defaultContext = context.getDefaultBuildContext()
   const resolvedContext = handlebars.compile(inputs.context)({defaultContext})
-  const args = [
-    'build',
+  const buildxArgs = [
     ...flag('--add-host', inputs.addHosts),
     ...flag('--allow', inputs.allow.join(',')),
     ...flag('--build-arg', inputs.buildArgs),
@@ -52,7 +51,6 @@ export async function build(inputs: Inputs) {
     ...flag('--no-cache-filter', inputs.noCacheFilters),
     ...flag('--output', inputs.outputs),
     ...flag('--platform', inputs.platforms.join(',')),
-    ...flag('--project', inputs.project),
     ...flag('--pull', inputs.pull),
     ...flag('--push', inputs.push),
     ...flag('--shm-size', inputs.shmSize),
@@ -76,10 +74,9 @@ export async function build(inputs: Inputs) {
         ? getSecret(`GIT_AUTH_TOKEN=${inputs.githubToken}`)
         : false,
     ),
-
-    // Build context
-    resolvedContext,
   ]
+  const depotArgs = [...flag('--project', inputs.project)]
+  const args = [...buildxArgs, ...depotArgs]
 
   // Attempt to exchange GitHub Actions OIDC token for temporary Depot trust relationship token
   let token = inputs.token ?? process.env.DEPOT_TOKEN
@@ -100,14 +97,14 @@ export async function build(inputs: Inputs) {
   }
 
   try {
-    await execBuild('depot', args, {
+    await execBuild('depot', ['build', ...args, resolvedContext], {
       ignoreReturnCode: true,
       env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
     })
   } catch (err) {
     if (inputs.buildxFallback) {
       core.warning(`falling back to buildx: ${err}`)
-      await execBuild('docker', ['buildx', ...args], {ignoreReturnCode: true})
+      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {ignoreReturnCode: true})
     }
   }
 }
