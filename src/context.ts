@@ -12,6 +12,7 @@ export interface Inputs {
   allow: string[]
   buildArgs: string[]
   buildContexts: string[]
+  buildxFallback: boolean
   cacheFrom: string[]
   cacheTo: string[]
   cgroupParent: string
@@ -45,6 +46,7 @@ export function getInputs(): Inputs {
     allow: parseCSV(core.getInput('allow')),
     buildArgs: core.getMultilineInput('build-args'),
     buildContexts: core.getMultilineInput('build-contexts'),
+    buildxFallback: core.getBooleanInput('buildx-fallback'),
     cacheFrom: core.getMultilineInput('cache-from'),
     cacheTo: core.getMultilineInput('cache-to'),
     cgroupParent: core.getInput('cgroup-parent'),

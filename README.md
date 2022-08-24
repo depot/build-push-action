@@ -97,10 +97,11 @@ This action needs a Depot API token to communicate with your project's builders.
 
 ### Depot-specific inputs
 
-| Name      | Type   | Description                                                                                                                                                                    |
-| --------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `project` | String | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders (default: the `depot.json` file at the root of your repo) |
-| `token`   | String | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication))                                              |
+| Name              | Type    | Description                                                                                                                                                                                                                                                         |
+| ----------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `project`         | String  | Depot [project](https://depot.dev/docs/core-concepts#projects) ID to route the image build to your projects builders (default: the `depot.json` file at the root of your repo)                                                                                      |
+| `token`           | String  | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication))                                                                                                                                   |
+| `buildx-fallback` | Boolean | If true, this action will fallback to using `docker buildx build` if `depot build` is unable to acquire a builder connection. This requires installing buildx with [`docker/setup-buildx-action`](https://github.com/docker/setup-buildx-action) (default: `false`) |
 
 ### General inputs
 

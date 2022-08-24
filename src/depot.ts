@@ -23,6 +23,13 @@ export async function version() {
   await exec.exec('depot', ['version'], {failOnStdErr: false})
 }
 
+async function execBuild(cmd: string, args: string[], options: exec.ExecOptions) {
+  const res = await exec.getExecOutput(cmd, args, options)
+  if (res.stderr.length > 0 && res.exitCode != 0) {
+    throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+  }
+}
+
 export async function build(inputs: Inputs) {
   const defaultContext = context.getDefaultBuildContext()
   const resolvedContext = handlebars.compile(inputs.context)({defaultContext})
@@ -92,15 +99,16 @@ export async function build(inputs: Inputs) {
     }
   }
 
-  const res = await exec.getExecOutput('depot', args, {
-    ignoreReturnCode: true,
-    env: {
-      ...process.env,
-      ...(token ? {DEPOT_TOKEN: token} : {}),
-    },
-  })
-  if (res.stderr.length > 0 && res.exitCode != 0) {
-    throw new Error(`depot failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+  try {
+    await execBuild('depot', args, {
+      ignoreReturnCode: true,
+      env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
+    })
+  } catch (err) {
+    if (inputs.buildxFallback) {
+      core.warning(`falling back to buildx: ${err}`)
+      await execBuild('docker', ['buildx', ...args], {ignoreReturnCode: true})
+    }
   }
 }
 
