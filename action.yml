@@ -24,6 +24,7 @@ inputs:
   buildx-fallback:
     description: 'Fallback to `docker buildx build` if `depot build` fails'
     required: false
+    default: 'false'
   cache-from:
     description: 'List of external cache sources for buildx (e.g., user/app:cache, type=local,src=path/to/dir)'
     required: false
