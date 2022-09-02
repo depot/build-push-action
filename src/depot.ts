@@ -105,6 +105,8 @@ export async function build(inputs: Inputs) {
     if (inputs.buildxFallback) {
       core.warning(`falling back to buildx: ${err}`)
       await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {ignoreReturnCode: true})
+    } else {
+      throw err
     }
   }
 }
