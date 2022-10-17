@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import {issueCommand} from '@actions/core/lib/command'
 import * as github from '@actions/github'
 import * as crypto from 'crypto'
 import * as csv from 'csv-parse/sync'
@@ -126,11 +125,6 @@ export function getTempFile(): string {
 export const isPost = !!core.getState('isPost')
 if (!isPost) {
   core.saveState('isPost', 'true')
-}
-
-// FIXME: Temp fix https://github.com/actions/toolkit/issues/777
-export function setOutput(name: string, value: unknown): void {
-  issueCommand('set-output', {name}, value)
 }
 
 function parseCSV(source: string): string[] {
