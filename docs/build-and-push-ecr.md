@@ -28,6 +28,8 @@ jobs:
       - name: Build and push
         uses: depot/build-push-action@v1
         with:
+          # if no depot.json file is at the root of your repo, you must specify the project id
+          project: <your-depot-project-id>
           token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           push: true
           tags: ${{ steps.ecr-login.outputs.registry }}/<your-app>:latest
