@@ -84,7 +84,7 @@ export async function build(inputs: Inputs) {
     try {
       const odicToken = await core.getIDToken('https://depot.dev')
       const res = await client.postJson<{ok: boolean; token: string}>(
-        'https://depot.dev/api/auth/oidc/github-actions',
+        'https://github.depot.dev/auth/oidc/github-actions',
         {token: odicToken},
       )
       if (res.result && res.result.token) {
