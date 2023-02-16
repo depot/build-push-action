@@ -220,6 +220,8 @@ jobs:
           token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           push: true
           tags: user/app:latest
+          build-args: |
+            FOO=bar
 ```
 
 ### Build multi-platform images
