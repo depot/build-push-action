@@ -28,9 +28,23 @@ export async function version() {
 async function execBuild(cmd: string, args: string[], options: Options) {
   const resolved = await io.which(cmd, true)
   console.log(`[command]${resolved} ${args.join(' ')}`)
-  const res = await execa(resolved, args, options)
-  if (res.stderr.length > 0 && res.exitCode != 0) {
-    throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+  const proc = execa(resolved, args, options)
+
+  function signalHandler(signal: NodeJS.Signals) {
+    proc.kill(signal)
+  }
+
+  process.on('SIGINT', signalHandler)
+  process.on('SIGTERM', signalHandler)
+
+  try {
+    const res = await proc
+    if (res.stderr.length > 0 && res.exitCode != 0) {
+      throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+    }
+  } finally {
+    process.off('SIGINT', signalHandler)
+    process.off('SIGTERM', signalHandler)
   }
 }
 
