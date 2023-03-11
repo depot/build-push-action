@@ -31,7 +31,6 @@ async function execBuild(cmd: string, args: string[], options: Options) {
   const proc = execa(resolved, args, options)
 
   function signalHandler(signal: NodeJS.Signals) {
-    console.log('Received signal: ', signal)
     proc.kill(signal)
   }
 
