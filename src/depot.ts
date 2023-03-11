@@ -1,7 +1,9 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as http from '@actions/http-client'
+import * as io from '@actions/io'
 import * as csv from 'csv-parse/sync'
+import {execa, Options} from 'execa'
 import * as fs from 'fs'
 import * as handlebars from 'handlebars'
 import * as path from 'path'
@@ -23,8 +25,10 @@ export async function version() {
   await exec.exec('depot', ['version'], {failOnStdErr: false})
 }
 
-async function execBuild(cmd: string, args: string[], options: exec.ExecOptions) {
-  const res = await exec.getExecOutput(cmd, args, options)
+async function execBuild(cmd: string, args: string[], options: Options) {
+  const resolved = await io.which(cmd, true)
+  console.log(`[command]${resolved} ${args.join(' ')}`)
+  const res = await execa(resolved, args, options)
   if (res.stderr.length > 0 && res.exitCode != 0) {
     throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
   }
@@ -98,13 +102,13 @@ export async function build(inputs: Inputs) {
 
   try {
     await execBuild('depot', ['build', ...args, resolvedContext], {
-      ignoreReturnCode: true,
+      reject: false,
       env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
     })
   } catch (err) {
     if (inputs.buildxFallback) {
       core.warning(`falling back to buildx: ${err}`)
-      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {ignoreReturnCode: true})
+      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {reject: false})
     } else {
       throw err
     }
