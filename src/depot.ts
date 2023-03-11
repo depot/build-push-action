@@ -104,11 +104,12 @@ export async function build(inputs: Inputs) {
     await execBuild('depot', ['build', ...args, resolvedContext], {
       reject: false,
       env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
+      stdio: 'inherit',
     })
   } catch (err) {
     if (inputs.buildxFallback) {
       core.warning(`falling back to buildx: ${err}`)
-      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {reject: false})
+      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {reject: false, stdio: 'inherit'})
     } else {
       throw err
     }
