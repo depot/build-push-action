@@ -28,8 +28,9 @@ export async function version() {
 async function execBuild(cmd: string, args: string[], options?: Options) {
   const resolved = await io.which(cmd, true)
   console.log(`[command]${resolved} ${args.join(' ')}`)
-  const proc = execa(resolved, args, {...options, reject: false, stdin: 'inherit', stdout: 'inherit', stderr: 'pipe'})
+  const proc = execa(resolved, args, {...options, reject: false, stdin: 'inherit', stdout: 'pipe', stderr: 'pipe'})
 
+  if (proc.pipeStdout) proc.pipeStdout(process.stdout)
   if (proc.pipeStderr) proc.pipeStderr(process.stdout)
 
   function signalHandler(signal: NodeJS.Signals) {
