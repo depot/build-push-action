@@ -1,7 +1,9 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as http from '@actions/http-client'
+import * as io from '@actions/io'
 import * as csv from 'csv-parse/sync'
+import {execa, Options} from 'execa'
 import * as fs from 'fs'
 import * as handlebars from 'handlebars'
 import * as path from 'path'
@@ -23,10 +25,29 @@ export async function version() {
   await exec.exec('depot', ['version'], {failOnStdErr: false})
 }
 
-async function execBuild(cmd: string, args: string[], options: exec.ExecOptions) {
-  const res = await exec.getExecOutput(cmd, args, options)
-  if (res.stderr.length > 0 && res.exitCode != 0) {
-    throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+async function execBuild(cmd: string, args: string[], options?: Options) {
+  const resolved = await io.which(cmd, true)
+  console.log(`[command]${resolved} ${args.join(' ')}`)
+  const proc = execa(resolved, args, {...options, reject: false, stdin: 'inherit', stdout: 'pipe', stderr: 'pipe'})
+
+  if (proc.pipeStdout) proc.pipeStdout(process.stdout)
+  if (proc.pipeStderr) proc.pipeStderr(process.stdout)
+
+  function signalHandler(signal: NodeJS.Signals) {
+    proc.kill(signal)
+  }
+
+  process.on('SIGINT', signalHandler)
+  process.on('SIGTERM', signalHandler)
+
+  try {
+    const res = await proc
+    if (res.stderr.length > 0 && res.exitCode != 0) {
+      throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+    }
+  } finally {
+    process.off('SIGINT', signalHandler)
+    process.off('SIGTERM', signalHandler)
   }
 }
 
@@ -98,13 +119,12 @@ export async function build(inputs: Inputs) {
 
   try {
     await execBuild('depot', ['build', ...args, resolvedContext], {
-      ignoreReturnCode: true,
       env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
     })
   } catch (err) {
     if (inputs.buildxFallback) {
       core.warning(`falling back to buildx: ${err}`)
-      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {ignoreReturnCode: true})
+      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext])
     } else {
       throw err
     }
