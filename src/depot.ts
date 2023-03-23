@@ -25,10 +25,10 @@ export async function version() {
   await exec.exec('depot', ['version'], {failOnStdErr: false})
 }
 
-async function execBuild(cmd: string, args: string[], options: Options) {
+async function execBuild(cmd: string, args: string[], options?: Options) {
   const resolved = await io.which(cmd, true)
   console.log(`[command]${resolved} ${args.join(' ')}`)
-  const proc = execa(resolved, args, {...options, stdin: 'inherit', stdout: 'inherit', stderr: 'pipe'})
+  const proc = execa(resolved, args, {...options, reject: false, stdin: 'inherit', stdout: 'inherit', stderr: 'pipe'})
 
   if (proc.pipeStderr) proc.pipeStderr(process.stdout)
 
@@ -118,14 +118,12 @@ export async function build(inputs: Inputs) {
 
   try {
     await execBuild('depot', ['build', ...args, resolvedContext], {
-      reject: false,
       env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
-      stdio: 'inherit',
     })
   } catch (err) {
     if (inputs.buildxFallback) {
       core.warning(`falling back to buildx: ${err}`)
-      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext], {reject: false, stdio: 'inherit'})
+      await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext])
     } else {
       throw err
     }
