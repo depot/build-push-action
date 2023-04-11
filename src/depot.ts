@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as exec from '@actions/exec'
+import * as github from '@actions/github'
 import * as http from '@actions/http-client'
 import * as io from '@actions/io'
 import * as csv from 'csv-parse/sync'
@@ -57,6 +58,7 @@ export async function build(inputs: Inputs) {
   const buildxArgs = [
     ...flag('--add-host', inputs.addHosts),
     ...flag('--allow', inputs.allow.join(',')),
+    ...flag('--attest', inputs.attests),
     ...flag('--build-arg', inputs.buildArgs),
     ...flag('--build-context', inputs.buildContexts),
     ...flag('--cache-from', inputs.cacheFrom),
@@ -74,6 +76,7 @@ export async function build(inputs: Inputs) {
     ...flag('--platform', inputs.platforms.join(',')),
     ...flag('--pull', inputs.pull),
     ...flag('--push', inputs.push),
+    ...flag('--sbom', inputs.sbom),
     ...flag('--shm-size', inputs.shmSize),
     ...flag('--ssh', inputs.ssh),
     ...flag('--tag', inputs.tags),
@@ -96,6 +99,23 @@ export async function build(inputs: Inputs) {
         : false,
     ),
   ]
+
+  if (inputs.provenance) {
+    buildxArgs.push(...flag('--provenance', inputs.provenance))
+  } else if (!hasDockerExporter(inputs)) {
+    // if provenance not specified and BuildKit version compatible for
+    // attestation, set default provenance. Also needs to make sure user
+    // doesn't want to explicitly load the image to docker.
+    if (github.context.payload.repository?.private ?? false) {
+      // if this is a private repository, we set the default provenance
+      // attributes being set in buildx: https://github.com/docker/buildx/blob/fb27e3f919dcbf614d7126b10c2bc2d0b1927eb6/build/build.go#L603
+      buildxArgs.push('--provenance', context.resolveProvenanceAttrs(`mode=min,inline-only=true`))
+    } else {
+      // for a public repository, we set max provenance mode.
+      buildxArgs.push('--provenance', context.resolveProvenanceAttrs(`mode=max`))
+    }
+  }
+
   const depotArgs = [...flag('--project', inputs.project)]
   const args = [...buildxArgs, ...depotArgs]
 
@@ -203,4 +223,8 @@ export function getDigest(source?: string): string | undefined {
   if (source === undefined) return undefined
   const metadata = JSON.parse(source)
   return metadata['containerimage.digest']
+}
+
+function hasDockerExporter(inputs: Inputs) {
+  return inputs.load || inputs.outputs.some((i) => i.includes('type=docker'))
 }
