@@ -9,6 +9,7 @@ import * as path from 'path'
 export interface Inputs {
   addHosts: string[]
   allow: string[]
+  attests: string[]
   buildArgs: string[]
   buildContexts: string[]
   buildxFallback: boolean
@@ -26,8 +27,10 @@ export interface Inputs {
   outputs: string[]
   platforms: string[]
   project: string
+  provenance: string
   pull: boolean
   push: boolean
+  sbom: string
   secretFiles: string[]
   secrets: string[]
   shmSize: string
@@ -43,6 +46,7 @@ export function getInputs(): Inputs {
   return {
     addHosts: parseCSV(core.getInput('add-hosts')),
     allow: parseCSV(core.getInput('allow')),
+    attests: core.getMultilineInput('attests'),
     buildArgs: core.getMultilineInput('build-args'),
     buildContexts: core.getMultilineInput('build-contexts'),
     buildxFallback: core.getBooleanInput('buildx-fallback'),
@@ -60,8 +64,10 @@ export function getInputs(): Inputs {
     outputs: core.getMultilineInput('outputs'),
     platforms: parseCSV(core.getInput('platforms')),
     project: core.getInput('project'),
+    provenance: getProvenanceInput(),
     pull: core.getBooleanInput('pull'),
     push: core.getBooleanInput('push'),
+    sbom: core.getInput('sbom'),
     secretFiles: core.getMultilineInput('secret-files'),
     secrets: core.getMultilineInput('secrets'),
     shmSize: core.getInput('shm-size'),
@@ -80,6 +86,44 @@ export function getDefaultBuildContext(): string {
   const ref = resolveRef()
   defaultContext = `${gitServer}/${github.context.repo.owner}/${github.context.repo.repo}.git#${ref}`
   return defaultContext
+}
+
+function getProvenanceInput(): string {
+  const input = core.getInput('provenance')
+  if (!input) return input
+
+  try {
+    return core.getBooleanInput('provenance') ? `builder-id=${provenanceBuilderID()}` : 'false'
+  } catch {
+    return resolveProvenanceAttrs(input)
+  }
+}
+
+export function resolveProvenanceAttrs(input: string): string {
+  // parse attributes from input
+  const fields: string[][] = csv.parse(input, {
+    relaxColumnCount: true,
+    skipEmptyLines: true,
+  })[0]
+
+  // check if builder-id attribute exists in the input
+  for (const field of fields) {
+    const parts = field
+      .toString()
+      .split(/(?<=^[^=]+?)=/)
+      .map((item) => item.trim())
+    if (parts[0] == 'builder-id') {
+      return input
+    }
+  }
+
+  // if not add builder-id attribute
+  return `${input},builder-id=${provenanceBuilderID()}`
+}
+
+function provenanceBuilderID(): string {
+  const serverURL = process.env.GITHUB_SERVER_URL || 'https://github.com'
+  return `${serverURL}/${github.context.repo.owner}/${github.context.repo.repo}/actions/runs/${github.context.runId}`
 }
 
 function resolveRef(): string {
