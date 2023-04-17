@@ -10,6 +10,9 @@ jobs:
   docker-image:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Set up Depot CLI
         uses: depot/setup-action@v1
 
