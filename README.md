@@ -5,7 +5,7 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
 ### Table of Contents
 
 - [Depot `build-push-action` GitHub Action](#depot-build-push-action-github-action)
-    - [Table of Contents](#table-of-contents)
+  - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
   - [Usage](#usage)
     - [Authentication](#authentication)
@@ -109,37 +109,37 @@ This action needs a Depot API token to communicate with your project's builders.
 
 The following inputs can be used as `step.with` keys and match the inputs from [`docker/build-push-action`](https://github.com/docker/build-push-action):
 
-| Name               | Type        | Description                                                                                                                                                                        |
-| ------------------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `add-hosts`        | List/CSV    | List of [customs host-to-IP mapping](https://docs.docker.com/engine/reference/commandline/build/#add-entries-to-container-hosts-file---add-host) (e.g., `docker:10.180.0.1`)       |
-| `allow`            | List/CSV    | List of [extra privileged entitlement](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#allow) (e.g., `network.host,security.insecure`)                 |
-| `attests`          | List        | List of [attestation](https://docs.docker.com/build/attestations/) parameters (e.g., `type=sbom,generator=image`)                                                                  |
-| `build-args`       | List        | List of [build-time variables](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)                                                              |
-| `build-contexts`   | List        | List of additional [build contexts](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-context) (e.g., `name=path`)                                 |
-| `cache-from`       | List        | List of [external cache sources](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#cache-from) (e.g., `type=local,src=path/to/dir`)                      |
-| `cache-to`         | List        | List of [cache export destinations](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#cache-to) (e.g., `type=local,dest=path/to/dir`)                    |
-| `cgroup-parent`    | String      | Optional [parent cgroup](https://docs.docker.com/engine/reference/commandline/build/#use-a-custom-parent-cgroup---cgroup-parent) for the container used in the build               |
-| `context`          | String      | Build's context is the set of files located in the specified [`PATH` or `URL`](https://docs.docker.com/engine/reference/commandline/build/) (default [Git context](https://github.com/docker/build-push-action#git-context))  |
-| `file`             | String      | Path to the Dockerfile. (default `{context}/Dockerfile`)                                                                                                                           |
-| `labels`           | List        | List of metadata for an image                                                                                                                                                      |
-| `load`             | Bool        | [Load](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#load) is a shorthand for `--output=type=docker` (default `false`)                               |
-| `network`          | String      | Set the networking mode for the `RUN` instructions during build                                                                                                                    |
-| `no-cache`         | Bool        | Do not use cache when building the image (default `false`)                                                                                                                         |
-| `no-cache-filters` | List/CSV    | Do not cache specified stages                                                                                                                                                      |
-| `outputs`          | List        | List of [output destinations](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#output) (format: `type=local,dest=path`)                                 |
-| `platforms`        | List/CSV    | List of [target platforms](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#platform) for build                                                         |
-| `provenance`       | Bool/String | Generate [provenance](https://docs.docker.com/build/attestations/slsa-provenance/) attestation for the build (shorthand for `--attest=type=provenance`)                            |
-| `pull`             | Bool        | Always attempt to pull all referenced images (default `false`)                                                                                                                     |
-| `push`             | Bool        | [Push](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#push) is a shorthand for `--output=type=registry` (default `false`)                             |
-| `sbom`             | Bool/String | Generate [SBOM](https://docs.docker.com/build/attestations/sbom/) attestation for the build (shorthand for `--attest=type=sbom`)                                                   |
-| `secrets`          | List        | List of [secrets](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#secret) to expose to the build (e.g., `key=string`, `GIT_AUTH_TOKEN=mytoken`)        |
-| `secret-files`     | List        | List of [secret files](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#secret) to expose to the build (e.g., `key=filename`, `MY_SECRET=./secret.txt`) |
-| `shm-size`         | String      | Size of [`/dev/shm`](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#-size-of-devshm---shm-size) (e.g., `2g`)                                          |
-| `ssh`              | List        | List of [SSH agent socket or keys](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#ssh) to expose to the build                                         |
-| `tags`             | List/CSV    | List of tags                                                                                                                                                                       |
-| `target`           | String      | Sets the target stage to build                                                                                                                                                     |
-| `ulimit`           | List        | [Ulimit](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#-set-ulimits---ulimit) options (e.g., `nofile=1024:1024`)                                     |
-| `github-token`     | String      | GitHub Token used to authenticate against a repository for [Git context](https://github.com/docker/build-push-action#git-context) (default `${{ github.token }}`)                  |
+| Name               | Type        | Description                                                                                                                                                                                                                  |
+| ------------------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `add-hosts`        | List/CSV    | List of [customs host-to-IP mapping](https://docs.docker.com/engine/reference/commandline/build/#add-entries-to-container-hosts-file---add-host) (e.g., `docker:10.180.0.1`)                                                 |
+| `allow`            | List/CSV    | List of [extra privileged entitlement](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#allow) (e.g., `network.host,security.insecure`)                                                           |
+| `attests`          | List        | List of [attestation](https://docs.docker.com/build/attestations/) parameters (e.g., `type=sbom,generator=image`)                                                                                                            |
+| `build-args`       | List        | List of [build-time variables](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)                                                                                                        |
+| `build-contexts`   | List        | List of additional [build contexts](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-context) (e.g., `name=path`)                                                                           |
+| `cache-from`       | List        | List of [external cache sources](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#cache-from) (e.g., `type=local,src=path/to/dir`)                                                                |
+| `cache-to`         | List        | List of [cache export destinations](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#cache-to) (e.g., `type=local,dest=path/to/dir`)                                                              |
+| `cgroup-parent`    | String      | Optional [parent cgroup](https://docs.docker.com/engine/reference/commandline/build/#use-a-custom-parent-cgroup---cgroup-parent) for the container used in the build                                                         |
+| `context`          | String      | Build's context is the set of files located in the specified [`PATH` or `URL`](https://docs.docker.com/engine/reference/commandline/build/) (default [Git context](https://github.com/docker/build-push-action#git-context)) |
+| `file`             | String      | Path to the Dockerfile. (default `{context}/Dockerfile`)                                                                                                                                                                     |
+| `labels`           | List        | List of metadata for an image                                                                                                                                                                                                |
+| `load`             | Bool        | [Load](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#load) is a shorthand for `--output=type=docker` (default `false`)                                                                         |
+| `network`          | String      | Set the networking mode for the `RUN` instructions during build                                                                                                                                                              |
+| `no-cache`         | Bool        | Do not use cache when building the image (default `false`)                                                                                                                                                                   |
+| `no-cache-filters` | List/CSV    | Do not cache specified stages                                                                                                                                                                                                |
+| `outputs`          | List        | List of [output destinations](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#output) (format: `type=local,dest=path`)                                                                           |
+| `platforms`        | List/CSV    | List of [target platforms](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#platform) for build                                                                                                   |
+| `provenance`       | Bool/String | Generate [provenance](https://docs.docker.com/build/attestations/slsa-provenance/) attestation for the build (shorthand for `--attest=type=provenance`)                                                                      |
+| `pull`             | Bool        | Always attempt to pull all referenced images (default `false`)                                                                                                                                                               |
+| `push`             | Bool        | [Push](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#push) is a shorthand for `--output=type=registry` (default `false`)                                                                       |
+| `sbom`             | Bool/String | Generate [SBOM](https://docs.docker.com/build/attestations/sbom/) attestation for the build (shorthand for `--attest=type=sbom`)                                                                                             |
+| `secrets`          | List        | List of [secrets](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#secret) to expose to the build (e.g., `key=string`, `GIT_AUTH_TOKEN=mytoken`)                                                  |
+| `secret-files`     | List        | List of [secret files](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#secret) to expose to the build (e.g., `key=filename`, `MY_SECRET=./secret.txt`)                                           |
+| `shm-size`         | String      | Size of [`/dev/shm`](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#-size-of-devshm---shm-size) (e.g., `2g`)                                                                                    |
+| `ssh`              | List        | List of [SSH agent socket or keys](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#ssh) to expose to the build                                                                                   |
+| `tags`             | List/CSV    | List of tags                                                                                                                                                                                                                 |
+| `target`           | String      | Sets the target stage to build                                                                                                                                                                                               |
+| `ulimit`           | List        | [Ulimit](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#-set-ulimits---ulimit) options (e.g., `nofile=1024:1024`)                                                                               |
+| `github-token`     | String      | GitHub Token used to authenticate against a repository for [Git context](https://github.com/docker/build-push-action#git-context) (default `${{ github.token }}`)                                                            |
 
 ## Outputs
 
