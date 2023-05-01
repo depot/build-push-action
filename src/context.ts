@@ -12,6 +12,7 @@ export interface Inputs {
   attests: string[]
   buildArgs: string[]
   buildContexts: string[]
+  buildPlatform: string
   buildxFallback: boolean
   cacheFrom: string[]
   cacheTo: string[]
@@ -49,6 +50,7 @@ export function getInputs(): Inputs {
     attests: core.getMultilineInput('attests'),
     buildArgs: core.getMultilineInput('build-args'),
     buildContexts: core.getMultilineInput('build-contexts'),
+    buildPlatform: core.getInput('build-platform'),
     buildxFallback: core.getBooleanInput('buildx-fallback'),
     cacheFrom: core.getMultilineInput('cache-from'),
     cacheTo: core.getMultilineInput('cache-to'),
