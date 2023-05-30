@@ -53,6 +53,12 @@ inputs:
   labels:
     description: 'List of metadata for an image'
     required: false
+  lint:
+    description: 'Lint dockerfiles and fail build if any issues are at least the lint-fail-on severity'
+    required: false
+  lint-fail-on:
+    description: 'Severity of linter issue to cause the build to fail. (e.g., error, warn, info, none)'
+    required: false
   load:
     description: 'Load is a shorthand for --output=type=docker'
     required: false
