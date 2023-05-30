@@ -62,7 +62,7 @@ export function getInputs(): Inputs {
     githubToken: core.getInput('github-token'),
     labels: core.getMultilineInput('labels'),
     lint: core.getBooleanInput('lint'),
-    lintFailOn: core.getInput('lint-fail-on') || 'error',
+    lintFailOn: core.getInput('lint-fail-on'),
     load: core.getBooleanInput('load'),
     network: core.getInput('network'),
     noCache: core.getBooleanInput('no-cache'),
