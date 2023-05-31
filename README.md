@@ -105,6 +105,8 @@ This action needs a Depot API token to communicate with your project's builders.
 | `token`           | String  | You must authenticate with the Depot API to communicate with your projects builders ([see Authentication above](#authentication))                                                                                                                                   |
 | `build-platform`  | String  | The platform to use for the build ( `linux/amd64` or `linux/arm64`)                                                                                                                                                                                                   |
 | `buildx-fallback` | Boolean | If true, this action will fallback to using `docker buildx build` if `depot build` is unable to acquire a builder connection. This requires installing buildx with [`docker/setup-buildx-action`](https://github.com/docker/setup-buildx-action) (default: `false`) |
+| `lint`            | Boolean | Lint dockerfiles and fail build if any issues are of `error` severity. (default `false`)                                                                         |
+| `lint-fail-on`    | String  | Severity of linter issue to cause the build to fail. (`error`, `warn`, `info`, `none`)                                                                         |
 
 ### General inputs
 
@@ -281,6 +283,7 @@ jobs:
 - [Build and push image to GCP Artifact Registry](/docs/build-and-push-artifact-registry.md)
 - [Build and push to multiple registries](/docs/build-and-push-multiple.md)
 - [Export image to Docker](/docs/export-to-docker.md)
+- [Lint and Build image](/docs/lint-and-build.md)
 
 ## License
 

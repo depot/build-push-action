@@ -21,6 +21,8 @@ export interface Inputs {
   file: string
   githubToken: string
   labels: string[]
+  lint: boolean
+  lintFailOn: string
   load: boolean
   network: string
   noCache: boolean
@@ -59,6 +61,8 @@ export function getInputs(): Inputs {
     file: core.getInput('file'),
     githubToken: core.getInput('github-token'),
     labels: core.getMultilineInput('labels'),
+    lint: core.getBooleanInput('lint'),
+    lintFailOn: core.getInput('lint-fail-on'),
     load: core.getBooleanInput('load'),
     network: core.getInput('network'),
     noCache: core.getBooleanInput('no-cache'),

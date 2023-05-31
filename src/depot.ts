@@ -116,7 +116,12 @@ export async function build(inputs: Inputs) {
     }
   }
 
-  const depotArgs = [...flag('--project', inputs.project), ...flag('--build-platform', inputs.buildPlatform)]
+  const depotArgs = [
+    ...flag('--project', inputs.project),
+    ...flag('--build-platform', inputs.buildPlatform),
+    ...flag('--lint', inputs.lint),
+    ...flag('--lint-fail-on', inputs.lintFailOn),
+  ]
   const args = [...buildxArgs, ...depotArgs]
 
   // Attempt to exchange GitHub Actions OIDC token for temporary Depot trust relationship token
