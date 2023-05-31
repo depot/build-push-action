@@ -56,6 +56,7 @@ inputs:
   lint:
     description: 'Lint dockerfiles and fail build if any issues are at least the lint-fail-on severity'
     required: false
+    default: 'false'
   lint-fail-on:
     description: 'Severity of linter issue to cause the build to fail. (e.g., error, warn, info, none)'
     required: false
