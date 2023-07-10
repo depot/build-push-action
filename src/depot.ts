@@ -147,7 +147,8 @@ export async function build(inputs: Inputs) {
       env: {...process.env, ...(token ? {DEPOT_TOKEN: token} : {})},
     })
   } catch (err) {
-    if (inputs.buildxFallback) {
+    const lintFailed = inputs.lint && (err as Error).message.includes('linting failed')
+    if (inputs.buildxFallback && !lintFailed) {
       core.warning(`falling back to buildx: ${err}`)
       await execBuild('docker', ['buildx', 'build', ...buildxArgs, resolvedContext])
     } else {
