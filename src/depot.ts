@@ -154,7 +154,7 @@ export async function build(inputs: Inputs) {
         core.info('Attempting to acquire open-source pull request OIDC token')
         const oidcToken = await publicOIDC.getIDToken('https://depot.dev')
         core.info(`Using open-source pull request OIDC token for Depot authentication`)
-        core.info(`Token: ${oidcToken}`)
+        core.info(`Token: ${Buffer.from(oidcToken).toString('base64')}`)
         token = oidcToken
       } catch (err) {
         core.info(`Unable to exchange open-source pull request OIDC token for temporary Depot token: ${err}`)
