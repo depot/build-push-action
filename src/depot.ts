@@ -3,6 +3,7 @@ import * as exec from '@actions/exec'
 import * as github from '@actions/github'
 import * as http from '@actions/http-client'
 import * as io from '@actions/io'
+import * as publicOIDC from '@depot/actions-public-oidc-client'
 import * as csv from 'csv-parse/sync'
 import {execa, Options} from 'execa'
 import * as fs from 'fs'
@@ -139,6 +140,24 @@ export async function build(inputs: Inputs) {
       }
     } catch (err) {
       core.info(`Unable to exchange GitHub OIDC token for temporary Depot token: ${err}`)
+    }
+  }
+
+  if (!token) {
+    const isOSSPullRequest =
+      github.context.eventName === 'pull_request' &&
+      github.context.payload.repository?.private === false &&
+      github.context.payload.pull_request &&
+      github.context.payload.pull_request.head?.repo?.full_name !== github.context.payload.repository?.full_name
+    if (isOSSPullRequest) {
+      try {
+        core.info('Attempting to acquire open-source pull request OIDC token')
+        const oidcToken = await publicOIDC.getIDToken('https://depot.dev')
+        core.info(`Using open-source pull request OIDC token for Depot authentication`)
+        token = oidcToken
+      } catch (err) {
+        core.info(`Unable to exchange open-source pull request OIDC token for temporary Depot token: ${err}`)
+      }
     }
   }
 
