@@ -152,17 +152,9 @@ export async function build(inputs: Inputs) {
     if (isOSSPullRequest) {
       try {
         core.info('Attempting to acquire open-source pull request OIDC token')
-        const odicToken = await publicOIDC.getIDToken('https://depot.dev')
-        core.info('Exchanging open-source pull request OIDC token for temporary Depot trust relationship token')
-        core.info(`OIDC token: ${odicToken}`)
-        const res = await client.postJson<{ok: boolean; token: string}>(
-          'https://github.depot.dev/auth/oidc/github-actions',
-          {token: odicToken},
-        )
-        if (res.result && res.result.token) {
-          token = res.result.token
-          core.info(`Exchanged open-source pull request OIDC token for temporary Depot token`)
-        }
+        const oidcToken = await publicOIDC.getIDToken('https://depot.dev')
+        core.info(`Using open-source pull request OIDC token for Depot authentication`)
+        token = oidcToken
       } catch (err) {
         core.info(`Unable to exchange open-source pull request OIDC token for temporary Depot token: ${err}`)
       }
