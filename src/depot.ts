@@ -78,6 +78,7 @@ export async function build(inputs: Inputs) {
     ...flag('--pull', inputs.pull),
     ...flag('--push', inputs.push),
     ...flag('--sbom', inputs.sbom),
+    ...flag('--sbom-dir', inputs.sbomDir),
     ...flag('--shm-size', inputs.shmSize),
     ...flag('--ssh', inputs.ssh),
     ...flag('--tag', inputs.tags),

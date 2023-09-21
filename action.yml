@@ -97,6 +97,9 @@ inputs:
   sbom:
     description: 'Generate SBOM attestation for the build (shorthand for --attest=type=sbom)'
     required: false
+  sbom-dir:
+    description: 'Directory to output SBOMs for each built image'
+    required: false
   secrets:
     description: 'List of secrets to expose to the build (e.g., key=string, GIT_AUTH_TOKEN=mytoken)'
     required: false
