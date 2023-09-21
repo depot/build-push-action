@@ -34,6 +34,7 @@ export interface Inputs {
   pull: boolean
   push: boolean
   sbom: string
+  sbomDir: string
   secretFiles: string[]
   secrets: string[]
   shmSize: string
@@ -74,6 +75,7 @@ export function getInputs(): Inputs {
     pull: core.getBooleanInput('pull'),
     push: core.getBooleanInput('push'),
     sbom: core.getInput('sbom'),
+    sbomDir: core.getInput('sbom-dir'),
     secretFiles: core.getMultilineInput('secret-files'),
     secrets: core.getMultilineInput('secrets'),
     shmSize: core.getInput('shm-size'),
