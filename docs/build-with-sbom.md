@@ -1,5 +1,5 @@
 ```yaml
-name: Lint and Build image
+name: Buid image with SBOM
 
 on:
   push:
