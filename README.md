@@ -5,7 +5,7 @@ This action implements the same inputs and outputs as the [`docker/build-push-ac
 ### Table of Contents
 
 - [Depot `build-push-action` GitHub Action](#depot-build-push-action-github-action)
-  - [Table of Contents](#table-of-contents)
+    - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
   - [Usage](#usage)
     - [Authentication](#authentication)
@@ -285,6 +285,7 @@ jobs:
 - [Build and push to multiple registries](/docs/build-and-push-multiple.md)
 - [Export image to Docker](/docs/export-to-docker.md)
 - [Lint and Build image](/docs/lint-and-build.md)
+- [Build image with Software Bill of Materials (SBOM)](/docs/build-with-sbom.md)
 
 ## License
 
