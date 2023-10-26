@@ -39,6 +39,16 @@ async function main() {
     await core.group(`Metadata`, async () => {
       core.info(metadata)
       core.setOutput('metadata', metadata)
+
+      try {
+        const parsed = JSON.parse(metadata)
+        if (parsed?.['depot.build']?.buildID) {
+          core.setOutput('build-id', parsed['depot.build'].buildID)
+        }
+        if (parsed?.['depot.build']?.projectID) {
+          core.setOutput('project-id', parsed['depot.build'].projectID)
+        }
+      } catch {}
     })
   }
 }

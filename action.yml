@@ -135,3 +135,7 @@ outputs:
     description: 'Image digest'
   metadata:
     description: 'Build result metadata'
+  build-id:
+    description: 'Build ID'
+  project-id:
+    description: 'Project ID'
