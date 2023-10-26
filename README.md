@@ -107,7 +107,7 @@ This action needs a Depot API token to communicate with your project's builders.
 | `buildx-fallback` | Boolean | If true, this action will fallback to using `docker buildx build` if `depot build` is unable to acquire a builder connection. This requires installing buildx with [`docker/setup-buildx-action`](https://github.com/docker/setup-buildx-action) (default: `false`) |
 | `lint`            | Boolean | Lint dockerfiles and fail build if any issues are of `error` severity. (default `false`)                                                                                                                                                                            |
 | `lint-fail-on`    | String  | Severity of linter issue to cause the build to fail. (`error`, `warn`, `info`, `none`)                                                                                                                                                                              |
-| `save`            | Boolean | Save the image to the Depot ephemeral registry (for use with the [depot/pull-action](https://github.com/depot/pull-action)                                                                                                                                          |
+| `save`            | Boolean | Save the image to the Depot ephemeral registry (for use with the [depot/pull-action](https://github.com/depot/pull-action))                                                                                                                                         |
 
 ### General inputs
 
