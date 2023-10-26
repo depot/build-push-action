@@ -123,6 +123,7 @@ export async function build(inputs: Inputs) {
     ...flag('--build-platform', inputs.buildPlatform),
     ...flag('--lint', inputs.lint),
     ...flag('--lint-fail-on', inputs.lintFailOn),
+    ...flag('--save', inputs.save),
   ]
   const args = [...buildxArgs, ...depotArgs]
 

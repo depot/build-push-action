@@ -33,6 +33,7 @@ export interface Inputs {
   provenance: string
   pull: boolean
   push: boolean
+  save: boolean
   sbom: string
   sbomDir: string
   secretFiles: string[]
@@ -74,6 +75,7 @@ export function getInputs(): Inputs {
     provenance: getProvenanceInput(),
     pull: core.getBooleanInput('pull'),
     push: core.getBooleanInput('push'),
+    save: core.getBooleanInput('save'),
     sbom: core.getInput('sbom'),
     sbomDir: core.getInput('sbom-dir'),
     secretFiles: core.getMultilineInput('secret-files'),
