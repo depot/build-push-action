@@ -246,7 +246,7 @@ jobs:
 
 ### Build multi-platform images
 
-Depot supports building truly native multi-platform images, no emulation needed.
+Depot supports building truly native [multi-platform images](https://depot.dev/blog/multi-platform-docker-images-in-github-actions), no emulation needed.
 
 ```yaml
 name: Build image
