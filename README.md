@@ -1,10 +1,14 @@
-# Depot `build-push-action` GitHub Action
+# Build and push a Docker image with Depot - GitHub Action
 
-This action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), but uses the [`depot` CLI](https://github.com/depot/cli) to execute the build.
+This GitHub Action is for building and pushing Docker images with Depot. The action implements the same inputs and outputs as the [`docker/build-push-action`](https://github.com/docker/build-push-action), but uses the [`depot` CLI](https://github.com/depot/cli) to execute the build.
+
+[Depot](https://depot.dev) allows you to build Docker images 5-20x faster on GitHub Actions through optimized build compute and a Docker cache that’s persisted between builds on SSDs.
+
+Depot also supports native [multi-architecture builds](#build-multi-platform-images).
 
 ### Table of Contents
 
-- [Depot `build-push-action` GitHub Action](#depot-build-push-action-github-action)
+- [Build and push a Docker image with Depot - GitHub Action](#build-and-push-a-docker-image-with-depot---github-action)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
   - [Usage](#usage)
@@ -242,7 +246,7 @@ jobs:
 
 ### Build multi-platform images
 
-Depot supports building truly native multi-platform images, no emulation needed.
+Depot supports building truly native [multi-platform images](https://depot.dev/blog/multi-platform-docker-images-in-github-actions), no emulation needed.
 
 ```yaml
 name: Build image
