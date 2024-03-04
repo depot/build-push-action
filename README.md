@@ -152,11 +152,13 @@ The following inputs can be used as `step.with` keys and match the inputs from [
 
 ## Outputs
 
-| Name       | Type   | Description           |
-| ---------- | ------ | --------------------- |
-| `imageid`  | String | Image ID              |
-| `digest`   | String | Image digest          |
-| `metadata` | JSON   | Build result metadata |
+| Name         | Type   | Description           |
+| ------------ | ------ | --------------------- |
+| `imageid`    | String | Image ID              |
+| `digest`     | String | Image digest          |
+| `metadata`   | JSON   | Build result metadata |
+| `project-id` | String | Depot Project ID      |
+| `build-id`   | String | Depot Build ID        |
 
 ## Examples
 
