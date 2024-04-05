@@ -15,6 +15,8 @@ async function main() {
   })
 
   const inputs = context.getInputs()
+  core.info(JSON.stringify(core.getInput('secrets'), null, 2))
+  core.info(JSON.stringify(inputs, null, 2))
   await depot.build(inputs)
 
   const imageID = depot.getImageID()
