@@ -49,28 +49,28 @@ export interface Inputs {
 export function getInputs(): Inputs {
   const defaultContext = getDefaultBuildContext()
   return {
-    addHosts: parseCSV(core.getInput('add-hosts')),
-    allow: parseCSV(core.getInput('allow')),
-    attests: core.getMultilineInput('attests'),
-    buildArgs: core.getMultilineInput('build-args'),
-    buildContexts: core.getMultilineInput('build-contexts'),
+    addHosts: getListInput('add-hosts'),
+    allow: getListInput('allow'),
+    attests: getListInput('attests', {ignoreComma: true}),
+    buildArgs: getListInput('build-args', {ignoreComma: true}),
+    buildContexts: getListInput('build-contexts', {ignoreComma: true}),
     buildPlatform: core.getInput('build-platform'),
     buildxFallback: core.getBooleanInput('buildx-fallback'),
-    cacheFrom: core.getMultilineInput('cache-from'),
-    cacheTo: core.getMultilineInput('cache-to'),
+    cacheFrom: getListInput('cache-from', {ignoreComma: true}),
+    cacheTo: getListInput('cache-to', {ignoreComma: true}),
     cgroupParent: core.getInput('cgroup-parent'),
     context: core.getInput('context') || defaultContext,
     file: core.getInput('file'),
     githubToken: core.getInput('github-token'),
-    labels: core.getMultilineInput('labels'),
+    labels: getListInput('labels', {ignoreComma: true}),
     lint: core.getBooleanInput('lint'),
     lintFailOn: core.getInput('lint-fail-on'),
     load: core.getBooleanInput('load'),
     network: core.getInput('network'),
     noCache: core.getBooleanInput('no-cache'),
-    noCacheFilters: core.getMultilineInput('no-cache-filters'),
-    outputs: core.getMultilineInput('outputs'),
-    platforms: parseCSV(core.getInput('platforms')),
+    noCacheFilters: getListInput('no-cache-filters', {ignoreComma: true}),
+    outputs: getListInput('outputs', {ignoreComma: true}),
+    platforms: getListInput('platforms'),
     project: core.getInput('project'),
     provenance: getProvenanceInput(),
     pull: core.getBooleanInput('pull'),
@@ -78,14 +78,14 @@ export function getInputs(): Inputs {
     save: core.getBooleanInput('save'),
     sbom: core.getInput('sbom'),
     sbomDir: core.getInput('sbom-dir'),
-    secretFiles: core.getMultilineInput('secret-files'),
-    secrets: core.getMultilineInput('secrets'),
+    secretFiles: getListInput('secret-files', {ignoreComma: true}),
+    secrets: getListInput('secrets', {ignoreComma: true}),
     shmSize: core.getInput('shm-size'),
-    ssh: core.getMultilineInput('ssh'),
-    tags: parseCSV(core.getInput('tags')),
+    ssh: getListInput('ssh', {ignoreComma: true}),
+    tags: getListInput('tags'),
     target: core.getInput('target'),
     token: core.getInput('token') || process.env.DEPOT_TOKEN,
-    ulimit: core.getMultilineInput('ulimit'),
+    ulimit: getListInput('ulimit', {ignoreComma: true}),
   }
 }
 
@@ -181,9 +181,12 @@ if (!isPost) {
   core.saveState('isPost', 'true')
 }
 
-function parseCSV(source: string): string[] {
-  source = source.trim()
+interface ListOptions {
+  ignoreComma?: boolean
+}
 
+function getListInput(name: string, options: ListOptions = {}): string[] {
+  const source = core.getInput(name).trim()
   if (source === '') return []
 
   const items: string[][] = csv.parse(source, {
@@ -193,8 +196,21 @@ function parseCSV(source: string): string[] {
     skipEmptyLines: true,
   })
 
-  return items
-    .flatMap((i) => i)
-    .map((i) => i.trim())
-    .filter((i) => i)
+  const list: string[] = []
+
+  for (const item of items) {
+    if (item.length === 1) {
+      if (options.ignoreComma) {
+        list.push(item[0])
+      } else {
+        list.push(...item[0].split(','))
+      }
+    } else if (options.ignoreComma) {
+      list.push(item.join(','))
+    } else {
+      list.push(...item)
+    }
+  }
+
+  return list.map((i) => i.trim()).filter((i) => i)
 }
