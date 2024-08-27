@@ -127,6 +127,12 @@ export async function build(inputs: Inputs) {
   ]
   const args = [...buildxArgs, ...depotArgs]
 
+  const isOSSPullRequest =
+    github.context.eventName === 'pull_request' &&
+    github.context.payload.repository?.private === false &&
+    github.context.payload.pull_request &&
+    github.context.payload.pull_request.head?.repo?.full_name !== github.context.payload.repository?.full_name
+
   // Attempt to exchange GitHub Actions OIDC token for temporary Depot trust relationship token
   let token = inputs.token ?? process.env.DEPOT_TOKEN
   if (!token) {
@@ -141,16 +147,11 @@ export async function build(inputs: Inputs) {
         core.info(`Exchanged GitHub Actions OIDC token for temporary Depot token`)
       }
     } catch (err) {
-      core.info(`Unable to exchange GitHub OIDC token for temporary Depot token: ${err}`)
+      if (!isOSSPullRequest) core.info(`Unable to exchange GitHub OIDC token for temporary Depot token: ${err}`)
     }
   }
 
   if (!token) {
-    const isOSSPullRequest =
-      github.context.eventName === 'pull_request' &&
-      github.context.payload.repository?.private === false &&
-      github.context.payload.pull_request &&
-      github.context.payload.pull_request.head?.repo?.full_name !== github.context.payload.repository?.full_name
     if (isOSSPullRequest) {
       try {
         core.info('Attempting to acquire open-source pull request OIDC token')
