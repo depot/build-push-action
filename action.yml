@@ -95,9 +95,12 @@ inputs:
     required: false
     default: 'false'
   save:
-    description: 'Save the image to the Depot ephemeral registry'
+    description: 'Save the image to the Depot Registry'
     required: false
     default: 'false'
+  save-tag:
+    description: 'Tag your image in the Depot Registry'
+    required: false
   sbom:
     description: 'Generate SBOM attestation for the build (shorthand for --attest=type=sbom)'
     required: false

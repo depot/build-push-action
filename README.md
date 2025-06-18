@@ -112,6 +112,7 @@ This action needs a Depot API token to communicate with your project's builders.
 | `lint`            | Boolean | Lint dockerfiles and fail build if any issues are of `error` severity. (default `false`)                                                                                                                                                                            |
 | `lint-fail-on`    | String  | Severity of linter issue to cause the build to fail. (`error`, `warn`, `info`, `none`)                                                                                                                                                                              |
 | `save`            | Boolean | Save the image to the Depot ephemeral registry (for use with the [depot/pull-action](https://github.com/depot/pull-action))                                                                                                                                         |
+| `save-tag`        | Boolean | Tag your image in the Depot Registry                                                                                                                                                                                                                                |
 
 ### General inputs
 
