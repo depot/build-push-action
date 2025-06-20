@@ -59,6 +59,7 @@ export async function build(inputs: Inputs) {
   const buildxArgs = [
     ...flag('--add-host', inputs.addHosts),
     ...flag('--allow', inputs.allow.join(',')),
+    ...flag('--annotation', inputs.annotations),
     ...flag('--attest', inputs.attests),
     ...flag('--build-arg', inputs.buildArgs),
     ...flag('--build-context', inputs.buildContexts),
