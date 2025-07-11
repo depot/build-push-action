@@ -35,6 +35,7 @@ export interface Inputs {
   push: boolean
   save: boolean
   saveTag: string
+  saveTags: string[]
   sbom: string
   sbomDir: string
   secretFiles: string[]
@@ -78,6 +79,7 @@ export function getInputs(): Inputs {
     push: core.getBooleanInput('push'),
     save: core.getBooleanInput('save'),
     saveTag: core.getInput('save-tag'),
+    saveTags: getListInput('save-tags'),
     sbom: core.getInput('sbom'),
     sbomDir: core.getInput('sbom-dir'),
     secretFiles: getListInput('secret-files', {ignoreComma: true}),
