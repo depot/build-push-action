@@ -9,6 +9,7 @@ import * as path from 'path'
 export interface Inputs {
   addHosts: string[]
   allow: string[]
+  annotations: string[]
   attests: string[]
   buildArgs: string[]
   buildContexts: string[]
@@ -53,6 +54,7 @@ export function getInputs(): Inputs {
   return {
     addHosts: getListInput('add-hosts'),
     allow: getListInput('allow'),
+    annotations: getListInput('annotations', {ignoreComma: true}),
     attests: getListInput('attests', {ignoreComma: true}),
     buildArgs: getListInput('build-args', {ignoreComma: true}),
     buildContexts: getListInput('build-contexts', {ignoreComma: true}),
