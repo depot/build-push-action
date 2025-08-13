@@ -125,7 +125,8 @@ export async function build(inputs: Inputs) {
     ...flag('--lint', inputs.lint),
     ...flag('--lint-fail-on', inputs.lintFailOn),
     ...flag('--save', inputs.save),
-    ...flag('--save-tag', inputs.saveTag)
+    ...flag('--save-tag', inputs.saveTag),
+    ...flag('--save-tag', inputs.saveTags),
   ]
 
   const args = [...buildxArgs, ...depotArgs]

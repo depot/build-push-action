@@ -104,6 +104,9 @@ inputs:
   save-tag:
     description: 'Tag your image in the Depot Registry'
     required: false
+  save-tags:
+    description: 'Tags for your image in the Depot Registry'
+    required: false
   sbom:
     description: 'Generate SBOM attestation for the build (shorthand for --attest=type=sbom)'
     required: false
