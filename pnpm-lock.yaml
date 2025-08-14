@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@actions/core':
         specifier: ^1.10.0
-        version: 1.10.0
+        version: 1.11.1
       '@actions/exec':
         specifier: ^1.1.1
         version: 1.1.1
@@ -19,7 +19,7 @@ importers:
         version: 5.1.1
       '@actions/http-client':
         specifier: ^2.1.0
-        version: 2.1.0
+        version: 2.2.3
       '@actions/io':
         specifier: ^1.1.3
         version: 1.1.3
@@ -60,9 +60,6 @@ importers:
 
 packages:
 
-  '@actions/core@1.10.0':
-    resolution: {integrity: sha512-2aZDDa3zrrZbP5ZYg159sNoLRb61nQ7awl5pSvIq5Qpj81vwDzdMRKzkWJGJuwVvWpvZKx7vspJALyvaaIQyug==}
-
   '@actions/core@1.11.1':
     resolution: {integrity: sha512-hXJCSrkwfA46Vd9Z3q4cpEpHB1rL5NG04+/rbqW9d3+CSvtB1tYe8UTpAlixa1vj0m/ULglfEK2UKxMGxCxv5A==}
 
@@ -74,9 +71,6 @@ packages:
 
   '@actions/github@6.0.1':
     resolution: {integrity: sha512-xbZVcaqD4XnQAe35qSQqskb3SqIAfRyLBrHMd/8TuL7hJSz2QtbDwnNM8zWx4zO5l2fnGtseNE3MbEvD7BxVMw==}
-
-  '@actions/http-client@2.1.0':
-    resolution: {integrity: sha512-BonhODnXr3amchh4qkmjPMUO8mFi/zLaaCeCAJZqch8iQqyDnVIkySjB38VHAC8IJ+bnlgfOqlhpyCUZHlQsqw==}
 
   '@actions/http-client@2.2.3':
     resolution: {integrity: sha512-mx8hyJi/hjFvbPokCg4uRd4ZX78t+YyRPtnKWwIl+RzNaVuFpQHfmlGVfsKEJN8LwTCvL+DfVgAM04XaHkm6bA==}
@@ -462,15 +456,8 @@ packages:
     resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
     engines: {node: '>=14.0'}
 
-  universal-user-agent@6.0.0:
-    resolution: {integrity: sha512-isyNax3wXoKaulPDZWHQqbmIx1k2tb9fb3GGDBRxCscfYV2Ch7WxPArBsFEG8s/safwXTT7H4QGhaIkTp9447w==}
-
   universal-user-agent@6.0.1:
     resolution: {integrity: sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==}
-
-  uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -484,22 +471,17 @@ packages:
     hasBin: true
 
   wordwrap@1.0.0:
-    resolution: {integrity: sha1-J1hIEIkUVqQXHI0CJkQa3pDLyus=}
+    resolution: {integrity: sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==}
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
 snapshots:
 
-  '@actions/core@1.10.0':
-    dependencies:
-      '@actions/http-client': 2.1.0
-      uuid: 8.3.2
-
   '@actions/core@1.11.1':
     dependencies:
       '@actions/exec': 1.1.1
-      '@actions/http-client': 2.1.0
+      '@actions/http-client': 2.2.3
 
   '@actions/exec@1.1.1':
     dependencies:
@@ -507,7 +489,7 @@ snapshots:
 
   '@actions/github@5.1.1':
     dependencies:
-      '@actions/http-client': 2.1.0
+      '@actions/http-client': 2.2.3
       '@octokit/core': 3.6.0
       '@octokit/plugin-paginate-rest': 2.21.3(@octokit/core@3.6.0)
       '@octokit/plugin-rest-endpoint-methods': 5.16.2(@octokit/core@3.6.0)
@@ -523,10 +505,6 @@ snapshots:
       '@octokit/request': 8.4.1
       '@octokit/request-error': 5.1.1
       undici: 5.29.0
-
-  '@actions/http-client@2.1.0':
-    dependencies:
-      tunnel: 0.0.6
 
   '@actions/http-client@2.2.3':
     dependencies:
@@ -623,7 +601,7 @@ snapshots:
       '@octokit/request-error': 2.1.0
       '@octokit/types': 6.41.0
       before-after-hook: 2.2.3
-      universal-user-agent: 6.0.0
+      universal-user-agent: 6.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -641,7 +619,7 @@ snapshots:
     dependencies:
       '@octokit/types': 6.41.0
       is-plain-object: 5.0.0
-      universal-user-agent: 6.0.0
+      universal-user-agent: 6.0.1
 
   '@octokit/endpoint@9.0.6':
     dependencies:
@@ -652,7 +630,7 @@ snapshots:
     dependencies:
       '@octokit/request': 5.6.3
       '@octokit/types': 6.41.0
-      universal-user-agent: 6.0.0
+      universal-user-agent: 6.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -708,7 +686,7 @@ snapshots:
       '@octokit/types': 6.41.0
       is-plain-object: 5.0.0
       node-fetch: 2.6.7
-      universal-user-agent: 6.0.0
+      universal-user-agent: 6.0.1
     transitivePeerDependencies:
       - encoding
 
@@ -867,11 +845,7 @@ snapshots:
     dependencies:
       '@fastify/busboy': 2.1.1
 
-  universal-user-agent@6.0.0: {}
-
   universal-user-agent@6.0.1: {}
-
-  uuid@8.3.2: {}
 
   webidl-conversions@3.0.1: {}
 
