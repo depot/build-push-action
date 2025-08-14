@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   update-tag:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Update the ${{ env.TAG_NAME }} tag
         uses: actions/publish-action@v0.3.0
