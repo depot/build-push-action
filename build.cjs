@@ -5,6 +5,6 @@ esbuild.build({
   bundle: true,
   minify: true,
   platform: 'node',
-  target: 'node16',
+  target: 'node24',
   outfile: 'dist/index.js',
 })
