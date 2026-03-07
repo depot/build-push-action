@@ -290,6 +290,7 @@ jobs:
 
 ### Other examples
 
+- [Save image to Depot Registry](/docs/save-to-depot-registry.md)
 - [Build and push image to Amazon ECR](/docs/build-and-push-ecr.md)
 - [Build and push image to GCP Artifact Registry](/docs/build-and-push-artifact-registry.md)
 - [Build and push to multiple registries](/docs/build-and-push-multiple.md)
