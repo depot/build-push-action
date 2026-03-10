@@ -98,7 +98,7 @@ inputs:
     required: false
     default: 'false'
   save:
-    description: 'Save the image to the Depot Registry. Without custom tags, the image is retrievable by build ID.'
+    description: 'Save the image to the Depot Registry. Without setting 'save-tag' or 'save-tags', the image is retrievable by build ID.'
     required: false
     default: 'false'
   save-tag:
