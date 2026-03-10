@@ -111,9 +111,9 @@ This action needs a Depot API token to communicate with your project's builders.
 | `buildx-fallback` | Boolean | If true, this action will fallback to using `docker buildx build` if `depot build` is unable to acquire a builder connection. This requires installing buildx with [`docker/setup-buildx-action`](https://github.com/docker/setup-buildx-action) (default: `false`) |
 | `lint`            | Boolean | Lint dockerfiles and fail build if any issues are of `error` severity. (default `false`)                                                                                                                                                                            |
 | `lint-fail-on`    | String  | Severity of linter issue to cause the build to fail. (`error`, `warn`, `info`, `none`)                                                                                                                                                                              |
-| `save`            | Boolean | Save the image to the Depot Registry (for use with the [depot/pull-action](https://github.com/depot/pull-action))                                                                                                                                                   |
-| `save-tag`        | String  | Tag your image in the Depot Registry                                                                                                                                                                                                                                |
-| `save-tags`       | List    | Tags for your image in the Depot Registry                                                                                                                                                                                                                           |
+| `save`            | Boolean | Save the image to the [Depot Registry](https://depot.dev/docs/registry/overview). Without custom tags, the image is retrievable by build ID. (default: `false`)                                                                                                     |
+| `save-tag`        | String  | Custom tag for the saved image in the Depot Registry (requires `save: true`)                                                                                                                                                                                        |
+| `save-tags`       | List    | Custom tags for the saved image in the Depot Registry (requires `save: true`)                                                                                                                                                                                       |
 
 ### General inputs
 
@@ -290,6 +290,7 @@ jobs:
 
 ### Other examples
 
+- [Save image to Depot Registry](/docs/save-to-depot-registry.md)
 - [Build and push image to Amazon ECR](/docs/build-and-push-ecr.md)
 - [Build and push image to GCP Artifact Registry](/docs/build-and-push-artifact-registry.md)
 - [Build and push to multiple registries](/docs/build-and-push-multiple.md)

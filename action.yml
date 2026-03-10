@@ -98,14 +98,14 @@ inputs:
     required: false
     default: 'false'
   save:
-    description: 'Save the image to the Depot Registry'
+    description: 'Save the image to the Depot Registry. Without setting 'save-tag' or 'save-tags', the image is retrievable by build ID.'
     required: false
     default: 'false'
   save-tag:
-    description: 'Tag your image in the Depot Registry'
+    description: 'Custom tag for the saved image in the Depot Registry (requires save)'
     required: false
   save-tags:
-    description: 'Tags for your image in the Depot Registry'
+    description: 'Custom tags for the saved image in the Depot Registry (requires save)'
     required: false
   sbom:
     description: 'Generate SBOM attestation for the build (shorthand for --attest=type=sbom)'
