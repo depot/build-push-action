@@ -44,5 +44,4 @@ jobs:
           tags: |
             <docker-hub-organization>/<your-app>:latest
             ${{ steps.ecr-login.outputs.registry }}/<your-app>:latest
-
 ```

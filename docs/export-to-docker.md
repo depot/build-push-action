@@ -33,5 +33,4 @@ jobs:
 
       - name: Run integration test with built container
         run: ...
-
 ```

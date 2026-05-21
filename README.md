@@ -11,6 +11,7 @@ Depot also supports native [multi-architecture builds](#build-multi-platform-ima
 - [Build and push a Docker image with Depot - GitHub Action](#build-and-push-a-docker-image-with-depot---github-action)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
+  - [Runtime compatibility](#runtime-compatibility)
   - [Usage](#usage)
     - [Authentication](#authentication)
     - [Differences from `docker/build-push-action`](#differences-from-dockerbuild-push-action)
@@ -33,6 +34,10 @@ The `depot` CLI will need to be available in your workflow, you can use the [`de
 steps:
   - uses: depot/setup-action@v1
 ```
+
+## Runtime compatibility
+
+This action runs on the GitHub Actions `node24` runtime. GitHub-hosted runners and current Depot GitHub Actions runners support this runtime. Self-hosted GitHub Actions runners must use `actions/runner` v2.327.1 or later; older self-hosted runners can pin an older concrete action version such as `depot/build-push-action@v1.17.0`, or the immutable `v1.17.0` commit SHA `5f3b3c2e5a00f0093de47f657aeaefcedff27d18`.
 
 ## Usage
 
@@ -123,7 +128,7 @@ The following inputs can be used as `step.with` keys and match the inputs from [
 | ------------------ | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `add-hosts`        | List/CSV    | List of [customs host-to-IP mapping](https://docs.docker.com/engine/reference/commandline/build/#add-entries-to-container-hosts-file---add-host) (e.g., `docker:10.180.0.1`)                                                 |
 | `allow`            | List/CSV    | List of [extra privileged entitlement](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#allow) (e.g., `network.host,security.insecure`)                                                           |
-| `annotations`      | List        | List of annotation to set to the image                                                                                                                                            |
+| `annotations`      | List        | List of annotation to set to the image                                                                                                                                                                                       |
 | `attests`          | List        | List of [attestation](https://docs.docker.com/build/attestations/) parameters (e.g., `type=sbom,generator=image`)                                                                                                            |
 | `build-args`       | List        | List of [build-time variables](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-arg)                                                                                                        |
 | `build-contexts`   | List        | List of additional [build contexts](https://github.com/docker/buildx/blob/master/docs/reference/buildx_build.md#build-context) (e.g., `name=path`)                                                                           |
