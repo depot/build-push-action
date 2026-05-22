@@ -11,7 +11,6 @@ Depot also supports native [multi-architecture builds](#build-multi-platform-ima
 - [Build and push a Docker image with Depot - GitHub Action](#build-and-push-a-docker-image-with-depot---github-action)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
-  - [Runtime compatibility](#runtime-compatibility)
   - [Usage](#usage)
     - [Authentication](#authentication)
     - [Differences from `docker/build-push-action`](#differences-from-dockerbuild-push-action)
@@ -34,10 +33,6 @@ The `depot` CLI will need to be available in your workflow, you can use the [`de
 steps:
   - uses: depot/setup-action@v1
 ```
-
-## Runtime compatibility
-
-This action runs on the GitHub Actions `node24` runtime. GitHub-hosted runners and current Depot GitHub Actions runners support this runtime. Self-hosted GitHub Actions runners must use `actions/runner` v2.327.1 or later; older self-hosted runners can pin an older concrete action version such as `depot/build-push-action@v1.17.0`, or the immutable `v1.17.0` commit SHA `5f3b3c2e5a00f0093de47f657aeaefcedff27d18`.
 
 ## Usage
 
