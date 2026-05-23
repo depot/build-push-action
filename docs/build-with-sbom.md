@@ -31,5 +31,5 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           path: ./sbom-output
-          name: "SBOM"
+          name: 'SBOM'
 ```
