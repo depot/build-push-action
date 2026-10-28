@@ -5,7 +5,7 @@ import * as http from '@actions/http-client'
 import * as io from '@actions/io'
 import * as publicOIDC from '@depot/actions-public-oidc-client'
 import * as csv from 'csv-parse/sync'
-import {execa, Options} from 'execa'
+import {execa, ExecaError, Options} from 'execa'
 import * as fs from 'fs'
 import * as handlebars from 'handlebars'
 import * as path from 'path'
@@ -44,8 +44,10 @@ async function execBuild(cmd: string, args: string[], options?: Options) {
 
   try {
     const res = await proc
-    if (res.stderr.length > 0 && res.exitCode != 0) {
-      throw new Error(`failed with: ${res.stderr.match(/(.*)\s*$/)?.[0]?.trim() ?? 'unknown error'}`)
+    if (res.failed) {
+      // Exit status determines failure even when the process emits no stderr.
+      const reason = res.stderr.match(/(.*)\s*$/)?.[0]?.trim() || (res as ExecaError).shortMessage
+      throw new Error(`failed with: ${reason}`)
     }
   } finally {
     process.off('SIGINT', signalHandler)
