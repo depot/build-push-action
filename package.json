@@ -5,6 +5,7 @@
     "build": "node build.cjs",
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
+    "test": "node build.cjs && node --test tests/*.test.cjs",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
